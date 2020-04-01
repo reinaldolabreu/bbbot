@@ -94,15 +94,22 @@ const vote = victim => async page => {
   await userCard.click();
 };
 
-const revote = victim => async page => {
+/*const revote = victim => async page => {
   await new Promise(resolve => setTimeout(resolve, 400));
   const retryBtn = await page.waitForXPath(XPathContents.revoteBtn);
-
   await retryBtn.click();
 
   await new Promise(resolve => setTimeout(resolve, 400));
   vote(victim)(page);
+};*/
+
+const revote = victim => async page => {
+await new Promise(resolve => setTimeout(resolve, 400));
+const retryBtn = await page.waitForXPath(XPathContents.revoteBtn);
+setTimeout(_ => {retryBtn.click();setTimeout(_ => vote(victim)(page), 1500) }, 1000)
+await new Promise(resolve => setTimeout(resolve, 400));
 };
+
 
 const cleanFiles = () => {
   for (let i = 0; i < 5; i++) {
